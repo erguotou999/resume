@@ -1,5 +1,7 @@
 export const AVAILABLE_TEMPLATES = {
   BASE: "base",
-  NEON: "neon",
   SHADOW: "shadow",
 };
+
+export type TemplateKey =
+  (typeof AVAILABLE_TEMPLATES)[keyof typeof AVAILABLE_TEMPLATES];

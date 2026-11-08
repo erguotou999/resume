@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { UserWorkExperienceData } from "@/config/user-data/workExperience";
 import type { IWorkExperience } from "@/config/user-data/workExperience";
 import { containerVariants, itemVariants } from "./animations";
+import { resolve } from "../../config/i18n/dictionary";
 import { useState } from "react";
 
 export function ShadowExperience() {
@@ -48,7 +49,9 @@ export function ShadowExperience() {
                 @ {exp.company}
               </h3>
               <p className="text-black/800 text-sm leading-relaxed">
-                {exp.shortDescription || exp.responsibilities[0]}
+                {exp.shortDescription
+                  ? resolve(exp.shortDescription, "en")
+                  : resolve(exp.responsibilities[0], "en")}
               </p>
               <button
                 onClick={() => openModal(index)}
@@ -115,7 +118,7 @@ export function ShadowExperience() {
                   {UserWorkExperienceData[selectedExp].responsibilities.map(
                     (resp, i) => (
                       <p key={i} className="text-base leading-relaxed">
-                        {resp}
+                        {resolve(resp, "en")}
                       </p>
                     )
                   )}

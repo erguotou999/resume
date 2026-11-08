@@ -5,6 +5,7 @@ import Link from "next/link";
 import { UserProjectsData } from "@/config/user-data/projects";
 import type { Project } from "@/config/user-data/projects";
 import { containerVariants, itemVariants } from "./animations";
+import { resolve } from "../../config/i18n/dictionary";
 
 export function ShadowProjects() {
   return (
@@ -68,7 +69,9 @@ export function ShadowProjects() {
               <h3 className="text-black text-xl font-semibold mb-2">
                 {project.title}
               </h3>
-              <p className="text-black/80 mb-4">{project.description}</p>
+              <p className="text-black/80 mb-4">
+                {resolve(project.description, "en")}
+              </p>
             </div>
           ))}
         </motion.div>

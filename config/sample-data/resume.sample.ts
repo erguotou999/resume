@@ -4,10 +4,11 @@ import {
   IWorkExperience,
   UserWorkExperienceData,
 } from "../user-data/workExperience";
+import type { Localized } from "../types";
 
 interface IUserResumeData {
   name: string;
-  tagline: string;
+  tagline: Localized;
   socials: typeof UserSocialsData;
   skills?: string[];
   education?: string[];

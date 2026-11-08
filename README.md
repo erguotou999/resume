@@ -8,7 +8,7 @@
   </p>
 
   <p align="center">
-    <a href="/templates">View Templates</a>
+    <a href="/demo?template=base">Live Demo</a>
     ·
     <a href="#-features">Features</a>
     ·
@@ -32,29 +32,25 @@ Portify is a modern, customizable portfolio generator built with Next.js 14. It 
 
 ## ✨ Features
 
-- 🎨 **Multiple Templates** - Choose from various professionally designed templates
+- 🎨 **Multiple Templates** - Choose from professionally designed templates
 - 🎯 **Zero Code Required** - Just update config files
 - ⚡ **Lightning Fast** - Built with Next.js 14
-- 🌗 **Dark & Light Modes** - Beautiful themes for each template
+- 🌍 **Bilingual (EN / 中文)** - Built-in language switcher with translated UI copy *and* content
 - 📱 **Mobile First** - Looks great on all devices
-- 🔍 **SEO Ready** - Optimized for search engines
+- 🔍 **SEO Ready** - Dynamic metadata, Open Graph and Twitter cards
 - 📊 **Analytics Ready** - Easy integration with your preferred analytics
 - 🚀 **One-Click Deploy** - Deploy to Vercel instantly
 - 🎉 **Live Preview** - Try templates before you choose
 
 ## 🎮 Templates & Demo
 
-Visit our [Templates Gallery](/templates) to explore all available templates:
-
-- **Base Template** - Clean, minimal design with dark mode
-- **Shadow Template** - Modern and elegant with subtle shadows
-- More templates coming soon!
+- **Base Template** - Editorial, museum-inspired layout with oversized serif headlines, a featured "In focus" strip and curatorial project cards.
+- **Shadow Template** - Minimal and monospaced, with a vertical side navigation.
 
 Try them live:
 
-1. Visit `/templates` to see all available templates
-2. Click on any template to view a live demo
-3. Use the "Use Template" button to get started
+1. Visit `/demo?template=base` or `/demo?template=shadow`
+2. Use the "Use Template" button in the demo banner to get started
 
 ## 🚀 Quick Start
 
@@ -77,11 +73,12 @@ This will create your personal configuration files in the `config/user-data` dir
 
 Update the configuration files in `config/user-data`:
 
-- `personal.json` - Your personal information and bio
-- `projects.json` - Your projects and portfolio items
-- `experience.json` - Your work experience and education
-- `skills.json` - Your technical skills and expertise
-- `socials.json` - Your social media links
+- `userInfo.ts` - Your personal information and bio
+- `projects.ts` - Your projects and portfolio items
+- `workExperience.ts` - Your work history
+- `skills.ts` - Your technical skills and expertise
+- `socials.ts` - Your social media links
+- `resume.ts` - The data behind the `/resume` CV page
 
 See the [Configuration Guide](USAGE.md) for detailed examples of each file format.
 
@@ -93,59 +90,35 @@ npm run dev
 yarn dev
 ```
 
-3. **Choose Your Template**
+5. **Choose Your Template**
 
-Visit `http://localhost:3000/templates` to:
+In `config/app-data/appSetting.ts`:
 
-- Browse available templates
-- Preview each template with demo data
-- Select your preferred design
+```typescript
+export const AppSettingData = {
+  template: AVAILABLE_TEMPLATES.BASE, // or AVAILABLE_TEMPLATES.SHADOW
+}
+```
 
-4. **Configure**
+## 🌍 Bilingual Support
 
-Update these key files in the `data` folder:
+Every user-facing string — navigation, section headings, button labels — lives in `config/i18n/dictionary.ts` with `en` and `zh` entries.
 
-<details>
-<summary>📄 Basic Info (Click to expand)</summary>
+Content fields (project descriptions, responsibilities, bios) accept either a plain string or a `{ en, zh }` pair:
 
-```typescript:data/usersInfo.ts
-export const UserInfoData = {
-  fullName: "Your Name",
-  tagLine: "Your Title",
-  location: "Your Location",
-  miniBio: "Your brief bio here...",
-  heroImage: {
-    type: "url",
-    url: "/images/your-image.png",
+```typescript
+// config/user-data/projects.ts
+{
+  title: "StartEase",
+  role: { en: "Creator and Maintainer", zh: "创建者与维护者" },
+  description: {
+    en: "A command-line interface that scaffolds projects in one command.",
+    zh: "一个用一条命令搭建项目的命令行工具。",
   },
-};
+}
 ```
 
-</details>
-
-<details>
-<summary>🔗 Social Links</summary>
-
-```typescript:data/socials.ts
-export const UserSocialsData = {
-  github: "https://github.com/yourusername",
-  linkedin: "https://linkedin.com/in/yourusername",
-  twitter: "https://twitter.com/yourusername",
-  email: "you@example.com",
-};
-```
-
-</details>
-
-<details>
-<summary>💼 Projects & Experience</summary>
-
-See [USAGE.md](USAGE.md) for detailed examples of:
-
-- Project configuration
-- Work experience
-- Skills and education
-</details>
+The active language is persisted to `localStorage`, and `<html lang>` is kept in sync for accessibility and SEO.
 
 ## 🚀 Deploy
 
@@ -176,5 +149,5 @@ Created with ❤️ by [JC CODER](https://github.com/JC-Coder) and [IDAN DEVS](h
 
 Templates designed by:
 
-- Base Template: [JC CODER](https://github.com/JC-Coder)
+- Base Template: [JC CODER](https://github.com/JC-Coder) — design inspired by the [British Museum](https://www.britishmuseum.org) & the [Louvre](https://www.louvre.fr)
 - Shadow Template: [Bright Bassey](https://github.com/bright-bassey)

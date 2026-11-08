@@ -3,26 +3,30 @@
 import { AVAILABLE_TEMPLATES } from "@/config/app-data/templates/config";
 import BaseTemplate from "@/templates/base/page";
 import ShadowTemplate from "@/templates/shadow/page";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import { BaseTemplate as BaseTemplateData } from "@/config/app-data/templates/base";
+import { resolve } from "@/config/i18n/dictionary";
 
 const DemoPage = () => {
-  let template = "";
-  if (typeof window !== "undefined") {
-    template =
-      new URLSearchParams(window?.location?.search).get("template") || "";
-  }
+  const [template, setTemplate] = useState("");
 
   useEffect(() => {
+    const next =
+      new URLSearchParams(window.location.search).get("template") || "";
+    setTemplate(next);
+
     // Reset scroll position when template changes
     window.scrollTo(0, 0);
 
     // Update page title dynamically
-    const templateName = template || "Base";
-    document.title = `${BaseTemplateData.fullName} - ${BaseTemplateData.tagline} (${templateName} Template Demo)`;
-  }, [template]);
+    const templateName = next || "Base";
+    document.title = `${BaseTemplateData.fullName} - ${resolve(
+      BaseTemplateData.tagline,
+      "en"
+    )} (${templateName} Template Demo)`;
+  }, []);
 
   const renderTemplate = () => {
     switch (template) {
@@ -38,22 +42,21 @@ const DemoPage = () => {
   return (
     <div>
       <Head>
-        <title>{`${BaseTemplateData.fullName} - ${BaseTemplateData.tagline} (${
-          template || "Base"
-        } Template Demo)`}</title>
+        <title>{`${BaseTemplateData.fullName} - ${resolve(
+          BaseTemplateData.tagline,
+          "en"
+        )} (${template || "Base"} Template Demo)`}</title>
         <meta
           name="description"
-          content={`Demo of ${
-            BaseTemplateData.fullName
-          }'s portfolio using the ${template || "Base"} template. ${
-            BaseTemplateData.miniBio
-          }`}
+          content={`Demo of ${BaseTemplateData.fullName}'s portfolio using the ${
+            template || "Base"
+          } template. ${resolve(BaseTemplateData.miniBio, "en")}`}
         />
         <meta name="robots" content="noindex, nofollow" />
       </Head>
 
       {/* Demo Banner */}
-      <div className="fixed top-0 left-0 right-0 bg-gray-900 text-white z-50 py-3 px-4">
+      <div className="fixed top-0 left-0 right-0 bg-gray-900 text-white z-[70] py-3 px-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <span className="bg-blue-500 text-xs font-medium px-2.5 py-1 rounded">

@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { UserSkillsData } from "@/config/user-data/skills";
 import { containerVariants, itemVariants } from "./animations";
+import { resolve } from "../../config/i18n/dictionary";
 
 export function ShadowSkills() {
   return (
@@ -31,7 +32,7 @@ export function ShadowSkills() {
                 {tech.name}
               </span>
               <span className="text-black/80 text-sm block mb-4">
-                {tech.description}
+                {resolve(tech.description, "en")}
               </span>
               <span className="text-black/70 text-xs font-semibold bg-black/5 rounded-full px-3 py-1 inline-block mt-2">
                 {tech.projects_completed} projects

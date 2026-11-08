@@ -23,22 +23,17 @@ const LandingPage = () => {
   const templates = [
     {
       name: "Base Template",
-      description: "Clean, minimal design with dark mode",
+      description:
+        "Editorial & museum-inspired — oversized serif headlines, curatorial cards and bilingual support",
       image: "/images/templates/base.png",
       demoUrl: "/demo?template=base",
     },
     {
       name: "Shadow Template",
-      description: "Modern and elegant with subtle shadows",
+      description: "Minimal and monospaced, with a vertical side navigation",
       image: "/images/templates/shadow.png",
       demoUrl: "/demo?template=shadow",
     },
-    // {
-    //   name: "Neon Template",
-    //   description: "Vibrant and futuristic design",
-    //   image: "/images/templates/neon.png",
-    //   demoUrl: "/demo?template=neon",
-    // },
   ];
 
   const features = [

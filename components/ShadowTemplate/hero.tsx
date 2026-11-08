@@ -5,6 +5,7 @@ import Link from "next/link";
 import { containerVariants, itemVariants } from "./animations";
 import { UserInfoData } from "../../config/user-data/userInfo";
 import { UserSocialsData } from "../../config/user-data/socials";
+import { resolve } from "../../config/i18n/dictionary";
 
 export function ShadowHero() {
   return (
@@ -41,7 +42,7 @@ export function ShadowHero() {
               {UserInfoData.fullName}.
             </span>
             <span className="text-black text-[clamp(10px,4vw,15px)] block">
-              {UserInfoData.tagLine}
+              {resolve(UserInfoData.tagLine, "en")}
             </span>
           </motion.h1>
 
@@ -82,7 +83,9 @@ export function ShadowHero() {
           variants={containerVariants}
           className="text-lg leading-relaxed space-y-6 font-mono lg:-mt-45"
         >
-          <motion.p variants={itemVariants}>{UserInfoData.miniBio}</motion.p>
+          <motion.p variants={itemVariants}>
+            {resolve(UserInfoData.miniBio, "en")}
+          </motion.p>
         </motion.div>
       </div>
     </main>

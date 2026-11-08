@@ -1,11 +1,35 @@
-export const UserInfoData = {
-  fullName: "JC CODER",
-  tagLine: "Software Engineer & Open Source Contributor",
-  location: "The Meta verse",
-  miniBio:
-    "I'm a Software Engineer with 3+ years of experience building scalable, secure, and high-performance server-side applications using Node.js, Express.js, and Nest.js. I specialize in creating efficient APIs and microservices, and have contributed to various open-source projects. I'm passionate about making a positive impact and continuously expanding my skills in software engineering.",
+import type { LocalizedText } from "../i18n/dictionary";
+
+export interface UserInfo {
+  fullName: string;
+  tagLine: LocalizedText;
+  location: string;
+  miniBio: LocalizedText;
+  /** Shown in the top status bar — e.g. "Available for work". */
+  availability?: LocalizedText;
+  heroImage: {
+    type: "url" | "file";
+    url: string;
+  };
+}
+
+export const UserInfoData: UserInfo = {
+  fullName: "Your Name",
+  tagLine: {
+    en: "Software Engineer & Open Source Contributor",
+    zh: "软件工程师 & 开源贡献者",
+  },
+  location: "Your City",
+  miniBio: {
+    en: "A short introduction that explains what you build and why it matters. Two or three sentences works best.",
+    zh: "一段简短的自我介绍，说明你在做什么，以及为什么重要。两三句话就足够了。",
+  },
+  availability: {
+    en: "Available for work",
+    zh: "正在寻找工作机会",
+  },
   heroImage: {
     type: "url",
-    url: "/images/jc_img_1.png",
+    url: "/images/profile.png",
   },
-}
+};

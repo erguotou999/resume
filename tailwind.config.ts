@@ -75,10 +75,12 @@ const config: Config = {
 
     },
     fontFamily: {
-      sans: ["Poppins", "sans-serif"],
+      sans: ["Poppins", "ui-sans-serif", "system-ui", "sans-serif"],
+      // Editorial display face — used for oversized headings.
+      serif: ["Georgia", "Times New Roman", "ui-serif", "serif"],
+      mono: ["Fira Code", "SF Mono", "ui-monospace", "monospace"],
     },
   },
   plugins: [require("tailwindcss-animate")],
-  mono: ['SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'monospace'],
 };
 export default config;

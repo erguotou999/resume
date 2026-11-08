@@ -7,6 +7,7 @@ Welcome to Portify! This guide will help you create and customize your professio
 - [Quick Start](#-quick-start)
 - [Templates](#-templates)
 - [Configuration](#-configuration)
+- [Bilingual Content](#-bilingual-content)
 - [Customization](#-customization)
 - [Deployment](#-deployment)
 - [FAQ](#-faq)
@@ -14,6 +15,7 @@ Welcome to Portify! This guide will help you create and customize your professio
 ## 🚀 Quick Start
 
 ### 1. Setup (2 minutes)
+
 ```bash
 # Clone and install
 git clone https://github.com/IDAN-DEVS/portify.git
@@ -26,97 +28,147 @@ npm run dev   # or: yarn dev
 
 ### 2. Choose a Template
 
-1. Visit `http://localhost:3000/templates`
-2. Browse available templates:
-   - **Base Template**: Clean, minimal design with dark mode
-   - **Shadow Template**: Modern and elegant with subtle shadows
-3. Click on any template to view a live demo
-4. Use the "Use Template" button when you've found your perfect match
+1. Visit `http://localhost:3000/demo?template=base`
+2. Browse the available templates:
+   - **Base Template**: Editorial, museum-inspired — oversized serif headlines, featured strip, curatorial cards
+   - **Shadow Template**: Minimal and monospaced, with a vertical side navigation
+3. Use the "Use Template" button in the demo banner when you've found your match
 
 ### 3. Configure Your Portfolio
 
-All configuration files are in the `data/` folder:
+All configuration lives in `config/user-data/`. These files are TypeScript modules — edit them directly.
 
-📁 **data/**
-- `usersInfo.ts` - Your name, title, and bio
-- `projects.ts` - Your projects
-- `skills.ts` - Your technical skills
-- `socials.ts` - Your social media links
-- `workExperience.ts` - Your work history
-- `appSetting.ts` - Template selection and app settings
+```
+📁 config/user-data/
+- userInfo.ts       - Your name, title, location and bio
+- projects.ts       - Your projects
+- workExperience.ts - Your work history
+- skills.ts         - Your technical skills
+- socials.ts        - Your social media links
+- resume.ts         - The data behind the /resume CV page
+```
 
-#### Examples:
+#### Examples
 
-**👤 Personal Info** (`usersInfo.ts`):
+**👤 Personal Info** (`userInfo.ts`):
+
 ```typescript
-export const UserInfoData = {
+export const UserInfoData: UserInfo = {
   fullName: "Jane Doe",
-  tagLine: "Full Stack Developer",
+  tagLine: { en: "Full Stack Developer", zh: "全栈开发者" },
   location: "San Francisco, CA",
-  miniBio: "Passionate about creating beautiful web experiences",
+  miniBio: {
+    en: "Passionate about creating beautiful web experiences",
+    zh: "热衷于打造优美的网页体验",
+  },
+  availability: { en: "Available for work", zh: "正在寻找工作机会" },
   heroImage: {
     type: "url",
     url: "/images/profile.png", // Add image to public/images/
   },
-}
+};
 ```
 
 **🔗 Social Links** (`socials.ts`):
+
 ```typescript
-export const UserSocialsData = {
-  github: "https://github.com/yourusername",
-  linkedin: "https://linkedin.com/in/yourusername",
-  twitter: "https://twitter.com/yourusername",
-  email: "you@example.com",
-}
+export const UserSocialsData: Record<string, Social> = {
+  github: { icon: Github, url: "https://github.com/yourusername" },
+  linkedin: { icon: Linkedin, url: "https://linkedin.com/in/yourusername" },
+  twitter: { icon: TwitterIcon, url: "https://twitter.com/yourusername" },
+  email: { icon: Mail, url: "you@example.com" },
+};
 ```
 
 **💼 Work Experience** (`workExperience.ts`):
+
 ```typescript
-export const UserWorkExperienceData = [
+export const UserWorkExperienceData: IWorkExperience[] = [
   {
     company: "Tech Company",
     position: "Senior Developer",
     period: "2022 - Present",
+    type: "full-time", // full-time | contract | freelance | open-source
+    current: true,
     responsibilities: [
-      "Led development of key features",
-      "Mentored junior developers",
+      { en: "Led development of key features", zh: "主导关键功能开发" },
     ],
   },
-]
+];
 ```
 
 **🛠️ Projects** (`projects.ts`):
+
 ```typescript
-export const ProjectsData = [
+export const UserProjectsData: Project[] = [
   {
     title: "Project Name",
-    description: "A brief description",
-    technologies: ["React", "Node.js"],
-    githubUrl: "https://github.com/you/project",
-    liveUrl: "https://project.com",
-    image: "/images/project.png",
+    role: { en: "Creator", zh: "创建者" },
+    description: { en: "A brief description", zh: "一段简短的描述" },
+    url: "https://github.com/you/project",
+    previewImage: "/images/Project/p1.jpg",
+    tags: ["CLI", "Open Source"], // rendered as eyebrow chips
+    year: "2024",
+    featured: true, // promotes the project into the "In focus" strip
+    imageAlt: "Project screenshot",
   },
-]
+];
+```
+
+**💡 Skills** (`skills.ts`):
+
+```typescript
+export const UserSkillsData: Skill[] = [
+  {
+    name: "Backend Development",
+    group: "Core", // cards are grouped by this label
+    description: { en: "Scalable backend architecture.", zh: "可扩展的后端架构。" },
+    projects_completed: "30+",
+    level: 5, // optional 1–5 proficiency indicator
+  },
+];
 ```
 
 ### 4. Select Your Template
 
-In `data/appSetting.ts`:
+In `config/app-data/appSetting.ts`:
+
 ```typescript
 export const AppSettingData = {
   template: AVAILABLE_TEMPLATES.BASE, // or AVAILABLE_TEMPLATES.SHADOW
 }
 ```
 
+## 🌍 Bilingual Content
+
+Every field typed as `Localized` accepts **either** a plain string **or** a `{ en, zh }` pair:
+
+```typescript
+// ✅ Plain string — fine for proper nouns and tech names
+title: "StartEase"
+
+// ✅ Localized pair — use for prose
+description: {
+  en: "A command-line interface for scaffolding projects.",
+  zh: "一个用于搭建项目的命令行工具。",
+}
+```
+
+UI copy (nav labels, section headings, buttons) lives in `config/i18n/dictionary.ts`. Add a new key there and it appears in both languages.
+
+The active locale is stored in `localStorage` under `portfolio-locale`, and `<html lang>` is updated on every change.
+
 ## 🎨 Customization
 
 ### Images
+
 1. Add your images to `public/images/`
 2. Reference them as `/images/your-image.png`
 
 ### Colors
+
 Edit `tailwind.config.ts`:
+
 ```typescript
 theme: {
   extend: {
@@ -127,35 +179,57 @@ theme: {
 }
 ```
 
+### Typography
+
+The base template uses two font stacks:
+
+- `font-sans` — Poppins (bundled in `public/fonts/`)
+- `font-serif` — a Georgia/Times system stack, used for oversized display headings
+
+### Show / hide sections
+
+Toggle sections in `config/app-data/templates/base.ts`:
+
+```typescript
+features: {
+  [FeaturesEnum.SOCIALS_SECTION]: true,
+  [FeaturesEnum.SKILLS_SECTION]: true,
+  [FeaturesEnum.PROJECTS_SECTION]: true,
+  [FeaturesEnum.WORK_EXPERIENCE_SECTION]: true,
+  [FeaturesEnum.FEATURED_SECTION]: true,
+  [FeaturesEnum.CONTACT_SECTION]: true,
+},
+```
+
 ## 🚀 Deployment
 
 ### Deploy to Vercel (Recommended)
+
 1. Push your code to GitHub
 2. Visit [vercel.com](https://vercel.com)
 3. Import your repository
 4. Click "Deploy"
 
+Optionally set `NEXT_PUBLIC_SITE_URL` so Open Graph images resolve to your domain.
+
 ## ❓ FAQ
 
 ### How do I switch templates?
-1. Visit `/templates` to preview all templates
-2. Choose your preferred template
-3. Update `template` in `data/appSetting.ts`
+
+Update `template` in `config/app-data/appSetting.ts`, then preview at `/demo?template=base` or `/demo?template=shadow`.
 
 ### Can I customize the template design?
+
 Yes! Each template uses Tailwind CSS for styling. You can:
+
 1. Modify colors in `tailwind.config.ts`
-2. Edit component styles in their respective files
+2. Edit component styles in `components/BaseTemplate/` (or `components/ShadowTemplate/`)
 3. Add new CSS classes as needed
 
 ### How do I add my own template?
+
 See our [Contributing Guide](CONTRIBUTING.md) for instructions on creating and submitting new templates.
 
-## 🤝 Need Help?
-
-- 📖 Check [GitHub Issues](https://github.com/IDAN-DEVS/portify/issues)
-- 🌟 Star us on GitHub if you like Portify!
-- 🤝 Join our community discussions
-
 ---
+
 Happy coding! 🎉

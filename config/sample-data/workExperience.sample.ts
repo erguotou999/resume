@@ -1,70 +1,44 @@
-export interface IWorkExperience {
-  company: string;
-  companyUrl?: string;
-  projectUrl?: string;
-  position: string;
-  period: string;
-  responsibilities: string[];
-  shortDescription?: string;
-}
+import type { IWorkExperience } from "../types";
+
+export type { IWorkExperience } from "../types";
 
 export const UserWorkExperienceData: IWorkExperience[] = [
   {
-    company: "TechGiant Corp",
-    companyUrl: "https://techgiant.example.com",
+    company: "Your Company",
+    companyUrl: "https://example.com",
     position: "Senior Software Engineer",
-    period: "Jan 2022 - Present",
-    shortDescription: "Leading backend development for cloud-based solutions",
+    period: "Jan 2022 – Present",
+    type: "full-time",
+    current: true,
+    shortDescription: {
+      en: "A one-line summary of your role",
+      zh: "用一句话概括你的职责",
+    },
     responsibilities: [
-      "Architected and implemented scalable microservices using Node.js and Kubernetes",
-      "Reduced system latency by 40% through implementation of Redis caching",
-      "Led a team of 5 developers in delivering critical features for enterprise clients",
-      "Implemented CI/CD pipelines that reduced deployment time by 60%",
-      "Mentored junior developers and conducted technical interviews",
-      "Collaborated with product managers to define technical specifications"
-    ]
+      {
+        en: "Describe an outcome you are proud of, ideally with a number",
+        zh: "描述一个你引以为傲的成果，最好带上数字",
+      },
+      {
+        en: "Describe a technical decision you owned",
+        zh: "描述一个由你主导的技术决策",
+      },
+    ],
   },
   {
-    company: "InnovateLabs",
-    companyUrl: "https://innovatelabs.example.com",
-    position: "Full Stack Developer",
-    period: "Mar 2020 - Dec 2021",
-    shortDescription: "Built and maintained multiple client-facing applications",
-    responsibilities: [
-      "Developed responsive web applications using React and Node.js",
-      "Implemented real-time features using WebSocket technology",
-      "Optimized database queries resulting in 50% faster load times",
-      "Integrated third-party APIs for payment processing and analytics",
-      "Created comprehensive API documentation using Swagger",
-      "Participated in daily stand-ups and sprint planning meetings"
-    ]
-  },
-  {
-    company: "StartupX",
-    projectUrl: "https://startupx.example.com",
+    company: "Your Previous Company",
     position: "Backend Developer",
-    period: "Jun 2019 - Feb 2020",
-    shortDescription: "Core developer for an AI-powered analytics platform",
+    period: "Mar 2020 – Dec 2021",
+    type: "full-time",
+    shortDescription: {
+      en: "A one-line summary of your role",
+      zh: "用一句话概括你的职责",
+    },
     responsibilities: [
-      "Built RESTful APIs using Express.js and MongoDB",
-      "Implemented user authentication using JWT and OAuth2",
-      "Developed automated testing suites with Jest",
-      "Created data processing pipelines for machine learning models",
-      "Optimized application performance and scalability",
-      "Collaborated with data scientists to implement ML features"
-    ]
+      {
+        en: "Describe an outcome you are proud of, ideally with a number",
+        zh: "描述一个你引以为傲的成果，最好带上数字",
+      },
+    ],
   },
-  {
-    company: "CodeCraft Solutions",
-    position: "Junior Developer",
-    period: "Jan 2019 - May 2019",
-    shortDescription: "Contributed to various client projects as part of an agile team",
-    responsibilities: [
-      "Developed and maintained features for e-commerce platforms",
-      "Fixed bugs and improved existing codebase",
-      "Participated in code reviews and documentation",
-      "Assisted in deployment and monitoring of applications",
-      "Learned and implemented best practices in software development"
-    ]
-  }
 ];

@@ -1,27 +1,81 @@
-import { BaseTemplate } from "../../config/app-data/templates/base";
-import { UserSkillsData } from "../../config/user-data/skills";
+"use client";
+
+import { useI18n } from "@/config/i18n/locale-provider";
+import { UserSkillsData } from "@/config/user-data/skills";
+import { BaseTemplate } from "@/config/app-data/templates/base";
+import { SectionHeader } from "./section-header";
+import { cn } from "@/lib/utils";
 
 export const SkillsSection = () => {
-  if (!BaseTemplate.features.SKILLS_SECTION) return;
+  const { dictionary: t, t: tr } = useI18n();
+
+  if (!BaseTemplate.features.SKILLS_SECTION) return null;
+
+  // Preserve order but group cards by their `group` label.
+  const groups = UserSkillsData.reduce<Record<string, typeof UserSkillsData>>(
+    (acc, skill) => {
+      const key = skill.group ?? "";
+      (acc[key] ||= []).push(skill);
+      return acc;
+    },
+    {}
+  );
 
   return (
-    <section className="container mx-auto px-4 mb-16">
-      <h2 className="text-2xl font-bold mb-8">Skills</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-        {UserSkillsData.map((skill) => (
-          <div
-            key={skill.name}
-            className="group relative flex flex-col bg-zinc-800/50 rounded-xl p-4 hover:bg-zinc-800 transition-colors border border-zinc-700"
-          >
-            <div className="flex items-center justify-between gap-4 mb-2">
-              <h3 className="text-lg font-semibold">{skill.name}</h3>
-              <span className="px-2 py-1 text-xs font-medium bg-zinc-700 text-zinc-200 rounded-full">
-                {skill.projects_completed} projects
-              </span>
+    <section id="skills" className="bg-white">
+      <div className="mx-auto max-w-[1400px] px-5 sm:px-8 py-16 sm:py-24">
+        <SectionHeader
+          eyebrow={t.nav.skills}
+          title={t.skills.title}
+          lede={t.skills.subtitle}
+        />
+
+        <div className="space-y-12">
+          {Object.entries(groups).map(([groupName, skills]) => (
+            <div key={groupName || "default"}>
+              {groupName && (
+                <h3 className="text-[11px] font-medium tracking-[0.2em] uppercase text-neutral-400 mb-5 pb-3 border-b border-neutral-200">
+                  {groupName}
+                </h3>
+              )}
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+                {skills.map((skill) => (
+                  <article key={skill.name}>
+                    <div className="flex items-start justify-between gap-4 mb-2">
+                      <h4 className="font-serif text-lg sm:text-xl text-neutral-900">
+                        {skill.name}
+                      </h4>
+                      <span className="shrink-0 rounded-full bg-neutral-100 px-2.5 py-0.5 text-[11px] text-neutral-600 whitespace-nowrap">
+                        {skill.projects_completed} {t.skills.projectsSuffix}
+                      </span>
+                    </div>
+
+                    {skill.level && (
+                      <div
+                        className="flex gap-1 mb-3"
+                        aria-label={`${skill.name} proficiency`}
+                      >
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <span
+                            key={i}
+                            className={cn(
+                              "h-1 w-6 rounded-full transition-colors",
+                              i < skill.level! ? "bg-neutral-900" : "bg-neutral-200"
+                            )}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    <p className="text-sm leading-relaxed text-neutral-600">
+                      {tr(skill.description)}
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
-            <p className="text-sm text-zinc-400">{skill.description}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

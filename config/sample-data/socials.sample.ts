@@ -1,32 +1,25 @@
 import { Github, Linkedin, Mail, TwitterIcon } from "lucide-react";
+import type { Social } from "../types";
 
-export const UserSocialsData = {
-  // facebook: {
-  //   icon: FacebookIcon,
-  //   url: "https://facebook.com/jc_coder1",
-  // },
+export const UserSocialsData: Record<string, Social> = {
   github: {
     icon: Github,
-    url: "https://github.com/JC-Coder",
+    url: "https://github.com/yourusername",
+    label: "GitHub",
   },
-  // instagram: {
-  //   icon: InstagramIcon,
-  //   url: ''
-  // },
   twitter: {
     icon: TwitterIcon,
-    url: "https://twitter.com/jc_coder1",
+    url: "https://twitter.com/yourusername",
+    label: "Twitter",
   },
   email: {
     icon: Mail,
-    url: "josephchimezie2003@gmail.com",
+    url: "you@example.com",
+    label: "Email",
   },
   linkedin: {
     icon: Linkedin,
-    url: "https://www.linkedin.com/in/joseph-chimezie-19504325a/",
+    url: "https://www.linkedin.com/in/yourusername/",
+    label: "LinkedIn",
   },
-  // twitch: {
-  //   icon: Twitch,
-  //   url: "https://twitch.tv/jc_coder1",
-  // },
 };

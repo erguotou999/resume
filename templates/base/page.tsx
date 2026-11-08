@@ -1,18 +1,28 @@
 import React from "react";
 import { HeroSection } from "../../components/BaseTemplate/hero";
+import { BaseNav } from "../../components/BaseTemplate/nav";
+import { AboutSection } from "../../components/BaseTemplate/about";
+import { FeaturedSection } from "../../components/BaseTemplate/featured";
 import { WorkExperienceSection } from "../../components/BaseTemplate/work";
 import { SkillsSection } from "../../components/BaseTemplate/skills";
 import { ProjectsSection } from "../../components/BaseTemplate/projects";
+import { ContactSection } from "../../components/BaseTemplate/contact";
 import { BaseTemplateLayout } from "../../components/BaseTemplate/layout";
 import { BaseFooter } from "@/components/BaseTemplate/footer";
 
 export default function BaseTemplate() {
   return (
     <BaseTemplateLayout>
-      <HeroSection />
-      <WorkExperienceSection />
-      <SkillsSection />
-      <ProjectsSection />
+      <BaseNav />
+      <main>
+        <HeroSection />
+        <FeaturedSection />
+        <AboutSection />
+        <ProjectsSection />
+        <WorkExperienceSection />
+        <SkillsSection />
+        <ContactSection />
+      </main>
       <BaseFooter />
     </BaseTemplateLayout>
   );

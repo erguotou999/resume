@@ -1,4 +1,5 @@
 import { UserInfoData } from "../../user-data/userInfo";
+import type { Localized } from "../../types";
 
 export enum FeaturesEnum {
   SOCIALS_SECTION = "SOCIALS_SECTION",
@@ -15,8 +16,8 @@ export interface ShadowTemplate {
   };
   fullName: string;
   location: string;
-  tagline: string;
-  miniBio: string;
+  tagline: Localized;
+  miniBio: Localized;
   features: {
     [key in FeaturesEnum]: boolean;
   };
